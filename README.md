@@ -1,3 +1,1 @@
-# laravel-api-jwt-boilerplate
-
-Laravel API Boilerplate
+# laravel-api-boilerplate
