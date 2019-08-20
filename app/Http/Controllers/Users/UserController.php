@@ -12,9 +12,11 @@ class UserController extends Controller
     public function index() 
     {
         $userRepo = new UserRepository(new User);
-        $user = $userRepo->all();
+        $users = $userRepo->all();
+        
+        $data = $userRepo->transformUsers($users)->toArray();
 
-        return response()->json($user);    
+        return response()->json($data);    
     }
     
     public function store(Request $request)
@@ -27,9 +29,12 @@ class UserController extends Controller
             ]);
             
             $userRepo = new UserRepository(new User);
+
             $user = $userRepo->createUser($request->all());
+
+            $data = $userRepo->transform($user)->toArray();
     
-            return response()->json($user, 201);
+            return response()->json($data, 201);
         
         } catch (Illuminate\Database\QueryException $e) {
             
@@ -48,8 +53,9 @@ class UserController extends Controller
             
             $userRepo = new UserRepository(new User);
             $user = $userRepo->findOneOrFail($id);
+            $data = $userRepo->transform($user)->toArray();
     
-            return response()->json($user);
+            return response()->json($data);
             
         } catch (Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             
@@ -76,7 +82,9 @@ class UserController extends Controller
             
             $userRepo->update($request->all());
 
-            return response()->json($user);
+            $data = $userRepo->transform($user)->toArray();
+
+            return response()->json($data, 201);
             
         } catch (Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             
@@ -107,9 +115,12 @@ class UserController extends Controller
             // but now pass the user object. 
             // You can DI the repo to the controller if you do not want this.
             $userRepo = new UserRepository($user);
+            
             $userRepo->delete();
 
-            $data = $userRepo->all();
+            $users = $userRepo->all();
+
+            $data = $userRepo->transformUsers($users)->toArray();
     
             return response()->json($data);
             

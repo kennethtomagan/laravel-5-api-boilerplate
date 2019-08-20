@@ -41,7 +41,7 @@ class AuthController extends Controller
 
         try {
 
-            JWTAuth::factory()->setTTL(40320); // Expired Time 28days
+            // JWTAuth::factory()->setTTL(40320); // Expired Time 28days
 
             if (! $token = JWTAuth::attempt($credentials, ['exp' => Carbon::now()->addDays(28)->timestamp])) {
 
