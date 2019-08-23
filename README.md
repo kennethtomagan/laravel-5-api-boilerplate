@@ -18,5 +18,24 @@ It is built on top of three big guys:
 
 ## Installation
 
-* Clone (or fork) this repository
+First, clone the repo:
+```
+$ git clone https://github.com/kennethtomagan/laravel-api-boilerplate.git
+```
+#### Install dependencies
 
+```
+$ cd laravel-api-boilerplate.git
+$ composer install
+```
+
+#### Configure the Environment
+Create `.env` file:
+```
+$ cat .env.example > .env
+```
+
+#### Migrations and Seed the database
+```
+$ php artisan migrate:fresh --seed
+```
