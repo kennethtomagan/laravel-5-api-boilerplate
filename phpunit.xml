@@ -23,11 +23,22 @@
         </whitelist>
     </filter>
     <php>
-        <server name="APP_ENV" value="testing"/>
+        <!-- <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
-        <server name="SESSION_DRIVER" value="array"/>
+        <server name="SESSION_DRIVER" value="array"/> -->
+
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite_testing"/>
+        <env name="ENABLE_REGISTRATION" value="true"/>
+        <env name="MAIL_DRIVER" value="log"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="REGISTRATION_CAPTCHA_STATUS" value="false"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="PASSWORD_EXPIRES_DAYS" value="false"/>
+        
     </php>
 </phpunit>
