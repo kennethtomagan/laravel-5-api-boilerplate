@@ -6,15 +6,33 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Users\Repositories\UserRepository;
 use App\Models\Users\User;
+use App\Models\Users\Repositories\UserRepositoryInterface;
+use Illuminate\Hashing\BcryptHasher;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepo;
+
+    /**
+     * UserController constructor.
+     * @param UserRepositoryInterface $userRepository
+     */
+    public function __construct(
+        UserRepositoryInterface $userRepository
+    ) {
+    
+        $this->userRepo = $userRepository;
+    }
+
     public function index() 
     {
-        $userRepo = new UserRepository(new User);
-        $users = $userRepo->all();
+        // $userRepo = new UserRepository(new User);
+        $users = $this->userRepo->all();
         
-        $data = $userRepo->transformUsers($users)->toArray();
+        $data = $this->userRepo->transformUsers($users)->toArray();
 
         return response()->json($data);    
     }
@@ -28,11 +46,13 @@ class UserController extends Controller
                 'email' => 'required|unique:users,email'
             ]);
             
-            $userRepo = new UserRepository(new User);
+            $data = $request->only('name', 'email', 'password');
 
-            $user = $userRepo->createUser($request->all());
+            $data['password'] = (new BcryptHasher)->make($data['password']);
 
-            $data = $userRepo->transform($user)->toArray();
+            $user = $this->userRepo->create($data);
+
+            $data = $this->userRepo->transform($user)->toArray();
     
             return response()->json($data, 201);
         
@@ -51,9 +71,9 @@ class UserController extends Controller
         
         try {
             
-            $userRepo = new UserRepository(new User);
-            $user = $userRepo->findOneOrFail($id);
-            $data = $userRepo->transform($user)->toArray();
+            $user = $this->userRepo->findOneOrFail($id);
+            
+            $data = $this->userRepo->transform($user)->toArray();
     
             return response()->json($data);
             
@@ -72,8 +92,7 @@ class UserController extends Controller
         
         try {
             
-            $userRepo = new UserRepository(new User);
-            $user = $userRepo->findOneOrFail($id);
+            $user = $this->userRepo->findOneOrFail($id);
             
             // Create an instance of the repository again 
             // but now pass the user object. 
@@ -82,7 +101,7 @@ class UserController extends Controller
             
             $userRepo->update($request->all());
 
-            $data = $userRepo->transform($user)->toArray();
+            $data = $this->userRepo->transform($user)->toArray();
 
             return response()->json($data, 201);
             
@@ -108,8 +127,7 @@ class UserController extends Controller
         
         try {
 
-            $userRepo = new UserRepository(new User);
-            $user = $userRepo->findOneOrFail($id);
+            $user = $this->userRepo->findOneOrFail($id);
             
             // Create an instance of the repository again 
             // but now pass the user object. 
@@ -118,9 +136,9 @@ class UserController extends Controller
             
             $userRepo->delete();
 
-            $users = $userRepo->all();
+            $users = $this->userRepo->all();
 
-            $data = $userRepo->transformUsers($users)->toArray();
+            $data = $this->userRepo->transformUsers($users)->toArray();
     
             return response()->json($data);
             
