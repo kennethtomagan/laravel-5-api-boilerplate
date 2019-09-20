@@ -44,7 +44,7 @@ $ php artisan migrate:fresh --seed
 
 | Verb     |       URI           |  Action  |      Controller    |
 | -------- | ------------------  | -------- | ------------------ |
-| POST     | `api/v1/auth`       |  store   |   AuthController   |
+| POST     | `api/v1/auth`       |  login   |   AuthController   |
 | GET      | `api/v1/users`      |  index   |   UserController   |
 | POST     | `api/v1/users`      |  store   |   UserController   |
 | GET      | `api/v1/users/{id}` |  show    |   UserController   |
