@@ -13,6 +13,7 @@ It is built on top of three big guys:
 
 * Ready To use User Authentications
 * Users CRUD (list, create, show, update delete )
+* Repository design pattern.
 * Json API Format response.
 
 
@@ -50,3 +51,46 @@ $ php artisan migrate:fresh --seed
 | GET      | `api/v1/users/{id}` |  show    |   UserController   |
 | PUT      | `api/v1/users/{id}` |  update  |   UserController   |
 | DELETE   | `api/v1/users/{id}` |  destroy |   UserController   |
+
+
+#### Sample API Response
+```
+{
+    "data": [
+        {
+            "type": "users",
+            "id": "1",
+            "attributes": {
+                "name": "Admin User",
+                "email": "admin@admin.com",
+                "created_at": "2019-09-11 07:25:24"
+            },
+            "links": {
+                "self": "http://localhost/api/v1/users/1"
+            }
+        },
+        {
+            "type": "users",
+            "id": "2",
+            "attributes": {
+                "name": "John Doe",
+                "email": "user@user.com",
+                "created_at": "2019-09-11 07:25:24"
+            },
+            "links": {
+                "self": "http://localhost/api/v1/users/2"
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "total": 2,
+            "count": 2,
+            "per_page": 25,
+            "current_page": 1,
+            "total_pages": 1
+        }
+    },
+}
+
+```
