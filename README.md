@@ -39,3 +39,14 @@ $ cat .env.example > .env
 ```
 $ php artisan migrate:fresh --seed
 ```
+
+#### Route API Endpoint
+
+| Verb     |       URI           |  Action  |      Controller    |
+| -------- | ------------------  | -------- | ------------------ |
+| POST     | `api/v1/auth`       |  store   |   AuthController   |
+| GET      | `api/v1/users`      |  index   |   UserController   |
+| POST     | `api/v1/users`      |  store   |   UserController   |
+| GET      | `api/v1/users/{id}` |  show    |   UserController   |
+| PUT      | `api/v1/users/{id}` |  update  |   UserController   |
+| DELETE   | `api/v1/users/{id}` |  destroy |   UserController   |
