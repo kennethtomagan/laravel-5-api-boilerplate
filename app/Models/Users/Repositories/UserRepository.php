@@ -7,7 +7,7 @@ use App\Models\Users\Transformers\UserTransformer;
 use Illuminate\Support\Collection;
 use League\Fractal\Scope;
 
-class UserRepository extends BaseRepository
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     public function __construct(User $user) 
     {
@@ -32,15 +32,6 @@ class UserRepository extends BaseRepository
     public function transform(User $user, string $includes = null) : Scope
     {
         return $this->processItemTransformer($user, new UserTransformer, 'users', $includes);
-    }
-    
-    public function createUser(array $data) : User
-    {
-        try {
-            return $this->create($data);
-        } catch (QueryException $e) {
-            throw new \Exception($e);
-        }
     }
 
 }
